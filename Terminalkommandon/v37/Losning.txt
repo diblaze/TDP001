@@ -1,0 +1,4 @@
+find ~ -maxdepth 3 -executable -type f -regex ".*\.py"
+
+find ~ -size +5M
+

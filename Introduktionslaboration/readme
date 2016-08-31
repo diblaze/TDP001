@@ -1,0 +1,21 @@
+Det första vi gör är att summera alla poäng med hjälp av kommandot 'awk' som låter oss söka igenom ett dokument med RegEX. 
+Med hjälp av 'awk' kan vi enkelt ta ut de tre kolumnerna med poängen och skriva ut dem till ett nytt dokument med bara poängen. 
+
+awk '{print ($3+$4+$5)}' resultat.txt > poang.txt
+
+Sedan tar vi ut namnen till sitt egna dokument, men här fungerade inte 'awk' (av anledning jag inte vet...) så jag använde istället kommandot 'cut' som låter mig att klippa ut innehåll beroende på vilken delimiter den har (delimiter - det som är mellan ord, i mitt fall så var det whitespace som var mellan orden.) och sedan klistra in det i ett nytt dokument. Med hjälp av argument 'f1,2' säger vi till 'cut' att klippa ut första och andra kolumnen som uppstår efter whitespace.
+
+cut -f1,2 -d' ' resultat.txt > names.txt
+
+Uppgiften var att sortera poängen i sjunkande ordning. För att göra detta måste man först lägga till varje namn direkt EFTER poäng raderna - inte UNDER. För att göra detta använder vi 'paste' kommandot som låter oss sammanfoga filer med varandra. Med argumentet '-d' säger vi till 'paste' att filerna ska klistras ihop efter varje whitespace/mellanslag in till filen 'poang' från filen 'names' och sammanfoga dem till en ny fil.
+
+paste -d' ' poang.txt names.txt > names_with_score_unsorted.txt 
+
+Sist behöver vi endast sortera poängen i sjunkande ordning. '-n' används för att sortera dem nummeriskt och '-r' används för att sortera dem i sjunkande ordning.
+
+sort -n -r names_with_score_unsorted.txt > names_with_score_sorted.txt
+
+För att städa upp resternade filer vi inte behöver kan vi köra kommandot 'rm' vilket tar bort filer. Genom att ge 'rm' filnamnen vet 'rm' vilken fil ska raderas. Med hjälp av '&&' mellan kommandon kan vi lägga till fler kommandon i en kö, som ska köras efter varandra.
+
+rm names.txt && rm poang.txt && rm names_with_score_unsorted.txt
+

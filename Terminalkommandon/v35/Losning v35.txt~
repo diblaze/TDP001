@@ -1,0 +1,40 @@
+1. Hur kan man med grep hitta alla rader med namn (förnamn eller efternamn) som slutar med tecknen "on"?
+
+Genom att köra kommandot "grep" kan vi leta genom text efter det vi söker efter.
+
+Kommandot nedan ger oss alla rader som har har "on" i slutet av ett ord innan mellanslag förekommer - alltså letar det efter "on" i slutet av varje ord, förnamn och efternamn.
+
+grep "on " resultat.txt
+
+2. Skriv ut de fem första efternamnen som inte avslutas med "son".
+
+Man kan göra på många sätt.
+Jag använde mig utav kommandot "cut" för att klippa ut namn kolumnerna och ta bort poängen. Sedan använder jag "grep" för att söka efter alla efternamn som har "son" i slutet av raden (och efter som jag tog bort alla nummer så avslutas raderna med efternamnen).
+
+cut:
+"-d' ' " delen av "cut" gör så att vi tar enbart kolumerna som sepereas med mellanslag.
+"-f -2" gör så att vi tar de första 2 kolumnen. (detta för att få förnamn och efternamn, annars kan man enbart använda sig utav "-f 2" för att få endast efternamnen utskrivna)
+
+grep:
+"-v" gör så att grep inverterar resultatet. Eftersom vi söker efter alla rader som avslutas med "son", gör "-v" att vi får alla rader som INTE matchar det vi söker efter.
+"son$" säger till "grep" att leta efter alla rader som slutar med "son". "$" säger till "grep" att vi letar efter radslut efter det matchande pattern.
+
+head:
+"-n5" ger oss det första 5 resultaten.
+
+cut -d" " -f -2 resultat.txt | grep -v "son$" | head -n5
+
+
+3. Skriv ut alla filer i /usr/lib som har formatet xxx.so.d. Endast xxx-delen ska skrivas ut.
+
+Först ser vi till att befinna oss i /usr/lib genom att använda oss utav "cd /usr/lib".
+Sedan använder vi "ls *.so.*" för att lista alla filer som har ".so." i sitt filnamn. Användandet av "sed 's/.so.*//'" gör så att alla filer "ls" hittade, görs om så att de endast innehåller xxx-delen eftersom "sed" tar byter ut ".so.*" till whitespace. Sedan använder vi "sort" för att sortera i bokstavsordning och "uniq" för att ta bort dubbletter som uppstår då många filer har samma namn men olika "d" versioner.
+
+ls *.so.* | sed 's/.so.*//' | sort | uniq  > ../../home/denbl369/Skrivbord/TDP001/Terminalkommandon/v35/resultat_files_in_lib.txt
+
+4. Skriv ut hur många rader som har bokstäverna "an" efter varandra i resultat.txt.
+
+"-i" för att ignorera lowercase/uppercase.
+"-c" för att skriva ut hur många rader som vi får tillbaka.
+
+ grep "an" -i -c resultat.txt 
