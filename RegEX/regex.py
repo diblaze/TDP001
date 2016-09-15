@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # Created by Denis Ivan Blazevic - denbl369@liu.se
 # Date: 2016-08-20
 # Summary: This script searches for all HTML tag occureces in a specific file and then prints out the tag and how many times it occurs.
