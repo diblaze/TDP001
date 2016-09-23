@@ -1,4 +1,4 @@
-find ~ -maxdepth 3 -executable -type f -regex ".*\.py"
+find ~ -maxdepth 5 -executable -type f -regex ".*\.py" -print -exec sh -c "head -1 {} | grep -q '^#\!' " \;
 
 find ~ -size +5M
 
