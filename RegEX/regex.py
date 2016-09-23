@@ -17,7 +17,7 @@ with open(args.f, 'r') as f:
     contents = f.read();
 
 # Find all HTML tag occurences with RegEX
-html_tag_matches = re.findall("(<[^/!].\S*>|<[^/!].\S*)", contents)
+html_tag_matches = re.findall("(<[^/!]\S*>|<[^/!]\S*)", contents)
 
 # If there are no HTML tags, quit the script with an error message.
 if not html_tag_matches:
@@ -42,7 +42,7 @@ for tag in html_tag_matches:
     if tag_count > 1:
         for i in range(0, tag_count):
             html_tag_matches.remove(tag)
-            
-    
+
+
 
 
